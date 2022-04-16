@@ -136,3 +136,9 @@ D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inquilino\Create.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inquilino\Editar.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inquilino\Eliminar.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inquilino\Detalles.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\dotnet-watch.dll
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Index.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Create.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Editar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Eliminar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Detalles.cshtml.g.cs
