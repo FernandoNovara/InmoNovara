@@ -1,0 +1,72 @@
+@model IEnumerable<InmoNovara.Models.Contrato>
+
+@{
+    ViewData["Title"] = "Contrato";
+}
+
+<h1>Inicio @ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Crear Nuevo Garante</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdContrato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInmueble)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInquilino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.inquilino.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdGarante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFinal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdContrato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inmueble.IdInmueble)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inquilino.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inquilino.Dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.garante.Nombre)
+            </td>
+            <td>
+                @item.FechaInicio.ToShortDateString()
+            </td>
+            <td>
+                @item.FechaFinal.ToShortDateString()
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Editar" asp-route-id="@item.IdContrato" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+                <a class="btn btn-danger" asp-action="Eliminar" asp-route-id="@item.IdContrato" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+                <a class="btn btn-info" asp-action="Detalles" asp-route-id="@item.IdContrato" title="Detalles"><i class="fas fa-book"></i></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

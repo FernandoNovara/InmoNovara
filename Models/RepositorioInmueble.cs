@@ -29,8 +29,8 @@ namespace InmoNovara.Models
                         {
                             IdInmueble = reader.GetInt32(0),
                             Tipo = reader.GetString(1),
-                            Tamaño = reader.GetString(2),
-                            Ambiente = reader.GetString(3),
+                            Ambiente = reader.GetString(2),
+                            Tamaño = reader.GetString(3),
                             Propietario = new Propietario
                             {
                                 Id = reader.GetInt32(4),

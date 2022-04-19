@@ -1,0 +1,51 @@
+@model InmoNovara.Models.Contrato
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdContrato)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdContrato)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdInmueble)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.inmueble.IdInmueble) @Html.DisplayFor(model => model.inmueble.Tipo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdInquilino)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.inquilino.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdGarante)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.garante.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaInicio.Day)/@Html.DisplayFor(model => model.FechaInicio.Month)/@Html.DisplayFor(model => model.FechaInicio.Year)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaFinal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaFinal.Day)/@Html.DisplayFor(model => model.FechaFinal.Month)/@Html.DisplayFor(model => model.FechaFinal.Year)
+        </dd>
+    </dl>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Volver</a>
+</div>

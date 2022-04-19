@@ -1,0 +1,64 @@
+@model InmoNovara.Models.Contrato
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear nuevo Contrato</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select class="form-control" name="IdInmueble">
+                    @foreach (var item in (List<Inmueble>)ViewBag.inmueble)
+                    {
+                        <option value="@item.IdInmueble">@("000"+item.IdInmueble+" "+item.Tipo)</option>
+                    }
+                </select>
+                <span asp-validation-for="IdInmueble" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdInquilino" class="control-label"></label>
+                <select class="form-control" name="Idinquilino">
+                    @foreach (var item in (List<Inquilino>)ViewBag.inquilino)
+                    {
+                        <option value="@item.Id">@(item.Dni+" "+item.Nombre)</option>
+                    }
+                </select>
+                <span asp-validation-for="IdInquilino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdGarante" class="control-label"></label>
+                <select class="form-control" name="Idgarante">
+                    @foreach (var item in (List<Garante>)ViewBag.garante)
+                    {
+                        <option value="@item.IdGarante">@(item.Dni+" "+item.Nombre)</option>
+                    }
+                </select>
+                <span asp-validation-for="IdGarante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaInicio" class="control-label"></label>
+                <input type="date" class="form-control" name="FechaInicio" id="">
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaFinal" class="control-label"></label>
+                <input type="date" class="form-control" name="FechaFinal" id="">
+                <span asp-validation-for="FechaFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a class="btn btn-primary" asp-action="Index">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

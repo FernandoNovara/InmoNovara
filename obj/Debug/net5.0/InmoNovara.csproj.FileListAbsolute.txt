@@ -142,3 +142,13 @@ D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Create.csh
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Editar.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Eliminar.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Detalles.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Garante\Create.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Garante\Detalles.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Garante\Editar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Garante\Eliminar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Garante\Index.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Index.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Editar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Eliminar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Create.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Detalles.cshtml.g.cs
