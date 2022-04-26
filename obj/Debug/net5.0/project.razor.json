@@ -15644,6 +15644,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Pago\\Detalles.cshtml",
+      "TargetPath": "Views\\Pago\\Detalles.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Propietario\\Editar.cshtml",
       "TargetPath": "Views\\Propietario\\Editar.cshtml",
       "FileKind": "mvc"
@@ -15659,8 +15664,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Pago\\Index.cshtml",
+      "TargetPath": "Views\\Pago\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Contrato\\Detalles.cshtml",
       "TargetPath": "Views\\Contrato\\Detalles.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Pago\\Editar.cshtml",
+      "TargetPath": "Views\\Pago\\Editar.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15671,6 +15686,11 @@
     {
       "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Pago\\Eliminar.cshtml",
+      "TargetPath": "Views\\Pago\\Eliminar.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15716,6 +15736,11 @@
     {
       "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Inmueble\\Index.cshtml",
       "TargetPath": "Views\\Inmueble\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Pago\\Create.cshtml",
+      "TargetPath": "Views\\Pago\\Create.cshtml",
       "FileKind": "mvc"
     },
     {

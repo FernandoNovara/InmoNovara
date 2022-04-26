@@ -7,9 +7,11 @@ namespace InmoNovara.Models
     {
         [Display(Name ="Codigo")]
         public Int32 IdInmueble {get;set;}
+        public String Uso {get;set;}
         public string Tipo {get;set;}
         public string Ambiente {get;set;}
         public string Tamaño {get;set;}
+        public double Precio {get;set;}
         [Display(Name ="Propietario")]
         public int IdPropietario{get;set;}
         public Propietario Propietario {get;set;}

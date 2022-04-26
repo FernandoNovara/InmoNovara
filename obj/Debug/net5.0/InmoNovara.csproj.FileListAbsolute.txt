@@ -152,3 +152,8 @@ D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Editar.csh
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Eliminar.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Create.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Contrato\Detalles.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Index.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Create.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Editar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Detalles.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Eliminar.cshtml.g.cs

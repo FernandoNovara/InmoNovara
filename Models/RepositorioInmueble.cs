@@ -18,7 +18,7 @@ namespace InmoNovara.Models
             var res = new List<Inmueble>();
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                string sql = @$"SELECT IdInmueble,Tipo,Ambiente,Tamaño,Id,Nombre,Apellido FROM `inmueble` JOIN propietarios on inmueble.IdPropietario = propietarios.Id;";
+                string sql = @$"SELECT IdInmueble,Uso,Tipo,Ambiente,Tamaño,Precio,Id,Nombre,Apellido FROM `inmueble` JOIN propietarios on inmueble.IdPropietario = propietarios.Id;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
                     conn.Open();
@@ -28,14 +28,16 @@ namespace InmoNovara.Models
                         var I = new Inmueble
                         {
                             IdInmueble = reader.GetInt32(0),
-                            Tipo = reader.GetString(1),
-                            Ambiente = reader.GetString(2),
-                            Tamaño = reader.GetString(3),
+                            Uso = reader.GetString(1),
+                            Tipo = reader.GetString(2),
+                            Ambiente = reader.GetString(3),
+                            Tamaño = reader.GetString(4),
+                            Precio = reader.GetDouble(5),
                             Propietario = new Propietario
                             {
-                                Id = reader.GetInt32(4),
-                                Nombre = reader.GetString(5),
-                                Apellido = reader.GetString(6)
+                                Id = reader.GetInt32(6),
+                                Nombre = reader.GetString(7),
+                                Apellido = reader.GetString(8)
                             }
                         };
                         res.Add(I);
@@ -51,15 +53,16 @@ namespace InmoNovara.Models
             var res = 0;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                String sql = @$"insert into Inmueble (Tipo,Tamaño,Ambiente,IdPropietario) 
-                            values (@{nameof(I.Tipo)},@{nameof(I.Tamaño)},@{nameof(I.Ambiente)},@{nameof(I.IdPropietario)});
+                String sql = @$"insert into Inmueble (Uso,Tipo,Tamaño,Ambiente,Precio,IdPropietario) 
+                            values (@{nameof(I.Uso)},@{nameof(I.Tipo)},@{nameof(I.Tamaño)},@{nameof(I.Ambiente)},@{nameof(I.Precio)},@{nameof(I.IdPropietario)});
                             Select last_Insert_Id();";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
-
+                    comm.Parameters.AddWithValue($"@{nameof(I.Uso)}",I.Uso);
                     comm.Parameters.AddWithValue($"@{nameof(I.Tipo)}",I.Tipo);
                     comm.Parameters.AddWithValue($"@{nameof(I.Tamaño)}",I.Tamaño);
                     comm.Parameters.AddWithValue($"@{nameof(I.Ambiente)}",I.Ambiente);
+                    comm.Parameters.AddWithValue($"@{nameof(I.Precio)}",I.Precio);
                     comm.Parameters.AddWithValue($"@{nameof(I.IdPropietario)}",I.IdPropietario);
                     conn.Open();
                     res=Convert.ToInt32(comm.ExecuteScalar());
@@ -92,12 +95,14 @@ namespace InmoNovara.Models
             int res = -1;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                String sql = $"Update Inmueble Set Tipo=@Tipo,Tamaño=@Tamaño,Ambiente=@Ambiente where IdInmueble = @IdInmueble;";
+                String sql = $"Update Inmueble Set Uso=@Uso,Tipo=@Tipo,Tamaño=@Tamaño,Ambiente=@Ambiente,Precio=@Precio where IdInmueble = @IdInmueble;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
+                    comm.Parameters.AddWithValue($"@{nameof(I.Uso)}",I.Uso);
                     comm.Parameters.AddWithValue($"@{nameof(I.Tipo)}",I.Tipo);
                     comm.Parameters.AddWithValue($"@{nameof(I.Tamaño)}",I.Tamaño);
-                    comm.Parameters.AddWithValue($"@{nameof(I.Ambiente)}",I.Ambiente);   
+                    comm.Parameters.AddWithValue($"@{nameof(I.Ambiente)}",I.Ambiente);
+                    comm.Parameters.AddWithValue($"@{nameof(I.Precio)}",I.Precio);   
                     comm.Parameters.AddWithValue("@IdInmueble",I.IdInmueble);
                     conn.Open();
                     res = comm.ExecuteNonQuery();
@@ -111,7 +116,7 @@ namespace InmoNovara.Models
             Inmueble res = null;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                string sql = @$"SELECT IdInmueble,Tipo,Ambiente,Tamaño,Id,Nombre,Apellido FROM `inmueble` JOIN propietarios on inmueble.IdPropietario = propietarios.Id && inmueble.IdInmueble = @id;";
+                string sql = @$"Select IdInmueble,Uso,Tipo,Ambiente,Tamaño,Precio,Id,Nombre,Apellido FROM `inmueble` JOIN propietarios on inmueble.IdPropietario = propietarios.Id && inmueble.IdInmueble = @id;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
                     comm.Parameters.AddWithValue("@id",id);
@@ -122,14 +127,16 @@ namespace InmoNovara.Models
                         res = new Inmueble
                         {
                             IdInmueble = reader.GetInt32(0),
-                            Tipo = reader.GetString(1),
-                            Ambiente = reader.GetString(2),
-                            Tamaño = reader.GetString(3),
+                            Uso = reader.GetString(1),
+                            Tipo = reader.GetString(2),
+                            Ambiente = reader.GetString(3),
+                            Tamaño = reader.GetString(4),
+                            Precio = reader.GetDouble(5),
                             Propietario = new Propietario
                             {
-                                Id = reader.GetInt32(4),
-                                Nombre = reader.GetString(5),
-                                Apellido = reader.GetString(6)
+                                Id = reader.GetInt32(6),
+                                Nombre = reader.GetString(7),
+                                Apellido = reader.GetString(8)
                             }
                         };
                     }
