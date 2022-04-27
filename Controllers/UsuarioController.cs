@@ -136,6 +136,9 @@ namespace InmoNovara.Controllers
             return View();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginView login)
         {
             try
