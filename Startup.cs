@@ -30,11 +30,8 @@ namespace InmoNovara
               services.AddAuthorization(options => 
               {
                   options.AddPolicy("Administrador",
-                                    policy => policy.RequireRole("Administrador","SuperAdministrador"));
-              });
-              
-
-              
+                                    policy => policy.RequireRole("Administrador"));
+              });            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,9 +57,8 @@ namespace InmoNovara
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Propietario}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("login", "entrar/{**accion}", new { controller = "Usuarios", action = "Login" });
+                endpoints.MapControllerRoute(name: "default","{controller=Propietario}/{action=Index}/{id?}");
             });
         }
     }

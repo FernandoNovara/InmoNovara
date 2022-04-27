@@ -127,6 +127,36 @@ namespace InmoNovara.Models
             }
             return res;
         }
+
+        public Usuario ObtenerPorEmail(string email)
+        {
+            Usuario e = null;
+            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Rol FROM Usuarios" +
+                    $" WHERE Email=@email";
+                using(MySqlCommand comm = new MySqlCommand(sql,conn))
+                {
+                    comm.Parameters.AddWithValue("@email",email);
+                    conn.Open();
+                    var reader = comm.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        e = new Usuario
+                        {
+                            IdUsuario = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Apellido = reader.GetString(2),
+                            Email = reader.GetString(4),
+                            Clave = reader.GetString(5),
+							Rol = reader.GetInt32(6),
+						};
+                    }
+                    conn.Close();
+                }
+            }
+            return e;
+        }
     }
 
     

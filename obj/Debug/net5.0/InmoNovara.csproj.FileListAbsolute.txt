@@ -157,3 +157,10 @@ D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Create.cshtml.
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Editar.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Detalles.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Eliminar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Index.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Detalles.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Eliminar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Editar.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Create.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Home\Restringido.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Login.cshtml.g.cs
