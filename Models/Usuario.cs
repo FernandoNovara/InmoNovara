@@ -7,9 +7,8 @@ namespace InmoNovara.Models
 
     	public enum enRoles
 	{
-		SuperAdministrador = 1,
 		Administrador = 2,
-		Empleado = 3,
+		Empleado = 1,
 	}
 
     public class Usuario
@@ -25,6 +24,7 @@ namespace InmoNovara.Models
 		[Required, DataType(DataType.Password)]
 		public string Clave { get; set; }
         public int Rol { get; set; }
+		[Display(Name = "Jerarquia")]
         public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
 
         		public static IDictionary<int, string> ObtenerRoles()

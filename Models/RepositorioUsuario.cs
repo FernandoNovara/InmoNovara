@@ -46,14 +46,15 @@ namespace InmoNovara.Models
             var res = -1;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                String sql = @$"insert into Usuario (Nombre,Apellido,Email,Rol) 
-                            Values (@{nameof(u.Nombre)},@{nameof(u.Apellido)},@{nameof(u.Email)},@{nameof(u.Rol)});
+                String sql = @$"insert into Usuario (Nombre,Apellido,Email,Clave,Rol) 
+                            Values (@{nameof(u.Nombre)},@{nameof(u.Apellido)},@{nameof(u.Email)},@{nameof(u.Clave)},@{nameof(u.Rol)});
                             Select last_Insert_Id();";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
                     comm.Parameters.AddWithValue($"@{nameof(u.Nombre)}",u.Nombre);
                     comm.Parameters.AddWithValue($"@{nameof(u.Apellido)}",u.Apellido);
                     comm.Parameters.AddWithValue($"@{nameof(u.Email)}",u.Email);
+                    comm.Parameters.AddWithValue($"@{nameof(u.Clave)}",u.Clave);
                     comm.Parameters.AddWithValue($"@{nameof(u.Rol)}",u.Rol);
                     conn.Open();
                     res=Convert.ToInt32(comm.ExecuteScalar());

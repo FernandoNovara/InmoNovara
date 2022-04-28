@@ -27,18 +27,26 @@ namespace InmoNovara.Controllers
             repositorio = new RepositorioUsuario();
         }
 
-        [Authorize(Policy = "Administrador")]
+        [Authorize]
         public ActionResult Index()
         {
-            var lista = repositorio.ObtenerUsuario();
-            return View(lista);
+            if (User.IsInRole("Administrador"))
+            {
+                var lista = repositorio.ObtenerUsuario();
+                return View(lista);
+            }
+            else
+            {
+                return RedirectToAction("Index","Propietario");
+            }
+
         }
 
         // GET: Usuario/Detalles/5
         [Authorize(Policy = "Administrador")]
         public ActionResult Detalles(int id)
         {
-            var lista = repositorio.ObtenerUsuario();
+            var lista = repositorio.ObtenerPorId(id);
             return View(lista);
         }
 
@@ -56,17 +64,20 @@ namespace InmoNovara.Controllers
         [Authorize(Policy = "Administrador")]
         public ActionResult Create(Usuario u)
         {
+            if (!ModelState.IsValid)
+                return View();
             try
             {
-                int res = repositorio.Alta(u);
-                if( res > 0)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    return View();
-                }
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: u.Clave,
+                        salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                        prf: KeyDerivationPrf.HMACSHA1,
+                        iterationCount: 1000,
+                        numBytesRequested: 256 / 8));
+                u.Clave = hashed;
+                repositorio.Alta(u);
+
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -78,7 +89,9 @@ namespace InmoNovara.Controllers
         [Authorize(Policy = "Administrador")]
         public ActionResult Editar(int id)
         {
-            return View();
+            var lista = repositorio.ObtenerPorId(id);
+            ViewBag.Roles = Usuario.ObtenerRoles();
+            return View(lista);
         }
 
         // POST: Usuario/Editar/5
@@ -109,7 +122,8 @@ namespace InmoNovara.Controllers
         [Authorize(Policy = "Administrador")]
         public ActionResult Eliminar(int id)
         {
-            return View();
+            var lista = repositorio.ObtenerPorId(id);
+            return View(lista);
         }
 
         // POST: Usuario/Eliminar/5
@@ -120,7 +134,7 @@ namespace InmoNovara.Controllers
         {
             try
             {
-                // TODO: Add Eliminar logic here
+                repositorio.Baja(id);
 
                 return RedirectToAction(nameof(Index));
             }
