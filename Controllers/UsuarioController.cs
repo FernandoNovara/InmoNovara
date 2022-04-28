@@ -46,6 +46,7 @@ namespace InmoNovara.Controllers
         [Authorize(Policy = "Administrador")]
         public ActionResult Create()
         {
+            ViewBag.Roles = Usuario.ObtenerRoles();
             return View();
         }
 
@@ -143,7 +144,7 @@ namespace InmoNovara.Controllers
         {
             try
             {
-                var returnUrl = String.IsNullOrEmpty(TempData["returnUrl"] as string)? "/Home" : TempData["returnUrl"].ToString();                
+                var returnUrl = String.IsNullOrEmpty(TempData["returnUrl"] as string)? "/Propietario" : TempData["returnUrl"].ToString();                
                 if(ModelState.IsValid)
                 {
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(

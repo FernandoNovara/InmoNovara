@@ -8,6 +8,7 @@
 
 <p>
     <a asp-action="Create">Create New</a>
+    <a asp-action="Logout">Salir</a>
 </p>
 <table class="table">
     <thead>
@@ -61,9 +62,11 @@
                 @Html.DisplayFor(modelItem => item.RolNombre)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <td>
+                <a class="btn btn-warning" asp-action="Editar" asp-route-id="@item.IdUsuario" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+                <a class="btn btn-danger" asp-action="Eliminar" asp-route-id="@item.IdUsuario" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+                <a class="btn btn-info" asp-action="Detalles" asp-route-id="@item.IdUsuario" title="Detalles"><i class="fas fa-book"></i></a>
+
             </td>
         </tr>
 }

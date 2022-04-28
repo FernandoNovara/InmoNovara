@@ -130,32 +130,32 @@ namespace InmoNovara.Models
 
         public Usuario ObtenerPorEmail(string email)
         {
-            Usuario e = null;
+            Usuario res = null;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                string sql = $"SELECT Id, Nombre, Apellido, Email, Clave, Rol FROM Usuarios" +
+                string sql = $"SELECT IdUsuario, Nombre, Apellido, Email, Clave, Rol FROM Usuario" +
                     $" WHERE Email=@email";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
                     comm.Parameters.AddWithValue("@email",email);
                     conn.Open();
                     var reader = comm.ExecuteReader();
-                    if (reader.Read())
+                    if(reader.Read())
                     {
-                        e = new Usuario
+                        res = new Usuario
                         {
                             IdUsuario = reader.GetInt32(0),
                             Nombre = reader.GetString(1),
                             Apellido = reader.GetString(2),
-                            Email = reader.GetString(4),
-                            Clave = reader.GetString(5),
-							Rol = reader.GetInt32(6),
-						};
+                            Email = reader.GetString(3),
+                            Clave = reader.GetString(4),
+                            Rol = reader.GetInt32(5),
+                        };
                     }
                     conn.Close();
                 }
             }
-            return e;
+            return res;
         }
     }
 
