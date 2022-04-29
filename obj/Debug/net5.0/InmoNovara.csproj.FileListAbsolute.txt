@@ -166,3 +166,5 @@ D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Home\Restringido.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Usuario\Login.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Shared\_Login.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Shared\_LoginModal.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Propietario\Propiedades.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Contratos.cshtml.g.cs

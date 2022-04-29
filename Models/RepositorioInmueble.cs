@@ -145,6 +145,42 @@ namespace InmoNovara.Models
             }
             return res;
         }
+
+        public List<Inmueble> obtenerPorIdPropietario(int id)
+        {
+            var res = new List<Inmueble>();
+            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                string sql = @$"Select IdInmueble,Uso,Tipo,Ambiente,Tamaño,Precio,Id,Nombre,Apellido FROM `inmueble` JOIN propietarios on inmueble.IdPropietario = propietarios.Id && propietarios.Id = @id;";
+                using(MySqlCommand comm = new MySqlCommand(sql,conn))
+                {
+                    comm.Parameters.AddWithValue("@id",id);
+                    conn.Open();
+                    var reader = comm.ExecuteReader();
+                    if(reader.Read())
+                    {
+                        var i = new Inmueble
+                        {
+                            IdInmueble = reader.GetInt32(0),
+                            Uso = reader.GetString(1),
+                            Tipo = reader.GetString(2),
+                            Ambiente = reader.GetString(3),
+                            Tamaño = reader.GetString(4),
+                            Precio = reader.GetDouble(5),
+                            Propietario = new Propietario
+                            {
+                                Id = reader.GetInt32(6),
+                                Nombre = reader.GetString(7),
+                                Apellido = reader.GetString(8)
+                            }
+                        };
+                        res.Add(i);
+                    }
+                    conn.Close();
+                }
+            }
+            return res;
+        }
     }
 
 }

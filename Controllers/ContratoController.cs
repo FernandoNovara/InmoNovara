@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using InmoNovara.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmoNovara.Controllers
 {
@@ -26,6 +28,8 @@ namespace InmoNovara.Controllers
             repositorioGarante = new RepositorioGarante();
             repositorioPropietario = new RepositorioPropietario();
         }
+
+        [Authorize]
         public ActionResult Index()
         {
             var lista = repositorioContrato.ObtenerContrato();
@@ -37,6 +41,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Contrato/Details/5
+        [Authorize]
         public ActionResult Detalles(int id)
         {
             var lista = repositorioContrato.ObtenerPorId(id);
@@ -47,6 +52,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Contrato/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.inmueble = repositorioInmueble.ObtenerInmueble();
@@ -56,6 +62,7 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Contrato/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Contrato c )
@@ -76,6 +83,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Contrato/Edit/5
+        [Authorize]
         public ActionResult Editar(int id)
         {
             var lista = repositorioContrato.ObtenerPorId(id);
@@ -86,6 +94,7 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Contrato/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Editar(int id, Contrato collection)
@@ -110,6 +119,8 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Contrato/Delete/5
+
+        [Authorize(Policy = "Administrador")]
         public ActionResult Eliminar(int id)
         {
             var lista = repositorioContrato.ObtenerPorId(id);
@@ -120,6 +131,7 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Contrato/Delete/5
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Eliminar(int id, IFormCollection collection)

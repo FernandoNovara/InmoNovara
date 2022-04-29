@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using InmoNovara.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmoNovara.Controllers
 {
@@ -17,6 +19,7 @@ namespace InmoNovara.Controllers
         }
         
         // GET: Garante
+        [Authorize]
         public ActionResult Index()
         {
             var lista = repositorioGarante.ObtenerGarante();
@@ -24,6 +27,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Garante/Details/5
+        [Authorize]
         public ActionResult Detalles(int id)
         {
             var lista = repositorioGarante.ObtenerPorId(id);
@@ -31,12 +35,14 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Garante/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Garante/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Garante i)
@@ -60,6 +66,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Garante/Edit/5
+        [Authorize]
         public ActionResult Editar(int id)
         {
             var lista = repositorioGarante.ObtenerPorId(id);
@@ -67,6 +74,7 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Garante/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Editar(int id, IFormCollection collection)
@@ -90,6 +98,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Garante/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Eliminar(int id)
         {
             var lista = repositorioGarante.ObtenerPorId(id);
@@ -97,6 +106,7 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Garante/Delete/5
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Eliminar(int id, IFormCollection collection)

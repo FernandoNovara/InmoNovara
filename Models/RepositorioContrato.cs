@@ -170,5 +170,53 @@ namespace InmoNovara.Models
             return res;
         }
 
+        public IList<Contrato> ObtenerPorIdInmueble(int id)
+        {
+            var res = new List<Contrato>();
+            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                string sql = @$"SELECT contrato.IdContrato,FechaInicio,FechaFinal,contrato.IdInmueble,inmueble.Tipo,contrato.IdInquilino,inquilino.Nombre,inquilino.Dni,contrato.IdGarante,garante.Nombre,garante.Dni
+                                FROM contrato
+                                JOIN inmueble On contrato.IdInmueble = inmueble.IdInmueble
+                                JOIN inquilino On contrato.IdInquilino= inquilino.Id
+                                JOIN garante on contrato.IdGarante = garante.IdGarante where contrato.IdInmueble = @id;";
+                using(MySqlCommand comm = new MySqlCommand(sql,conn))
+                {
+                    comm.Parameters.AddWithValue("@id",id);
+                    conn.Open();
+                    var reader = comm.ExecuteReader();
+                    if(reader.Read())
+                    {
+                        var c = new Contrato
+                        {
+                            IdContrato = reader.GetInt32(0),
+                            FechaInicio = reader.GetDateTime(1),
+                            FechaFinal = reader.GetDateTime(2),
+                            inmueble = new Inmueble
+                            {
+                                IdInmueble = reader.GetInt32(3),
+                                Tipo = reader.GetString(4)
+                            },
+                            inquilino = new Inquilino
+                            {
+                                Id = reader.GetInt32(5),
+                                Nombre = reader.GetString(6),
+                                Dni = reader.GetString(7)
+                            },
+                            garante = new Garante
+                            {
+                                IdGarante = reader.GetInt32(8),
+                                Nombre = reader.GetString(9),
+                                Dni = reader.GetString(10)
+                            }
+                        };
+                        res.Add(c);
+                    }
+                    conn.Close();
+                }
+            }
+            return res;
+        }
+
     }
 }

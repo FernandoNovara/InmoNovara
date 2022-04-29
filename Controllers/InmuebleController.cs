@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using InmoNovara.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Inmonovara.controllers
 {
@@ -14,14 +16,18 @@ namespace Inmonovara.controllers
         RepositorioInmueble repositorio;
         RepositorioPropietario repositorioPropietario;
 
+        RepositorioContrato repositorioContrato;
+
         public InmuebleController()
         {
+            repositorioContrato = new RepositorioContrato();
             repositorio = new RepositorioInmueble();
             repositorioPropietario = new RepositorioPropietario();
         }
 
 
         // GET: Inmueble
+        [Authorize]
         public ActionResult Index()
         {
             var lista = repositorio.ObtenerInmueble();
@@ -29,13 +35,16 @@ namespace Inmonovara.controllers
         }
 
         // GET: Inmueble/Details/5
+        [Authorize]
         public ActionResult Detalles(int id)
         {
             var lista = repositorio.ObtenerPorId(id);
+            ViewBag.Propietario = repositorioPropietario.ObtenerPorId(lista.IdPropietario);
             return View(lista);
         }
 
         // GET: Inmueble/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.propietarios = repositorioPropietario.ObtenerPropietario();
@@ -43,6 +52,7 @@ namespace Inmonovara.controllers
         }
 
         // POST: Inmueble/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Inmueble i)
@@ -68,6 +78,7 @@ namespace Inmonovara.controllers
         }
 
         // GET: Inmueble/Edit/5
+        [Authorize]
         public ActionResult Editar(int id)
         {
             ViewBag.propietarios =  repositorioPropietario.ObtenerPropietario();
@@ -76,6 +87,7 @@ namespace Inmonovara.controllers
         }
 
         // POST: Inmueble/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Editar(int id, IFormCollection collection)
@@ -99,6 +111,7 @@ namespace Inmonovara.controllers
         }
 
         // GET: Inmueble/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Eliminar(int id)
         {            
             var lista = repositorio.ObtenerPorId(id);
@@ -107,6 +120,7 @@ namespace Inmonovara.controllers
         }
 
         // POST: Inmueble/Delete/5
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Eliminar(int id, IFormCollection collection)
@@ -121,6 +135,13 @@ namespace Inmonovara.controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Contratos(int id)
+        {
+            var lista = repositorio.ObtenerPorId(id);
+            ViewBag.contratos = repositorioContrato.ObtenerPorIdInmueble(id);
+            return View(lista);
         }
     }
 }

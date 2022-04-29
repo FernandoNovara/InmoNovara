@@ -1,0 +1,68 @@
+@model InmoNovara.Models.Inmueble
+
+
+@{
+    ViewData["Title"] = "Contratos por Inmuebles";
+    var Contratos = (List<Contrato>)ViewBag.contratos;  
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Codigo Contrato
+            </th>
+            <th>
+                Codigo Inmueble
+            </th>
+            <th>
+                Codigo Inquilino
+            </th>
+            <th>
+                Dni de inquilino
+            </th>
+            <th>
+                Codigo de Garante
+            </th>
+            <th>
+                Fecha de Inicio
+            </th>
+            <th>
+                Fecha de Finalizacion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Contratos) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdContrato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inmueble.IdInmueble)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inquilino.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inquilino.Dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.garante.Nombre)
+            </td>
+            <td>
+                @item.FechaInicio.ToShortDateString()
+            </td>
+            <td>
+                @item.FechaFinal.ToShortDateString()
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Volver</a>
+</div>

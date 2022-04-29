@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using InmoNovara.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmoNovara.Controllers
 {
@@ -12,13 +14,16 @@ namespace InmoNovara.Controllers
     {
         RepositorioPago repositorio;
         RepositorioContrato repositorioContrato;
+        RepositorioInmueble repositorioInmueble;
         public PagoController()
         {
             repositorio = new RepositorioPago();
             repositorioContrato = new RepositorioContrato();
+            repositorioInmueble = new RepositorioInmueble();
         }
 
         // GET: Pago
+        [Authorize]
         public ActionResult Index()
         {
             var lista = repositorio.ObtenerPago();
@@ -26,6 +31,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Pago/Details/5
+        [Authorize]
         public ActionResult Detalles(int id)
         {
             var lista = repositorio.ObtenerPorId(id);
@@ -33,13 +39,16 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Pago/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.contrato = repositorioContrato.ObtenerContrato();
+            ViewBag.Inmueble = repositorioInmueble.ObtenerInmueble();
             return View();
         }
 
         // POST: Pago/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pago p)
@@ -65,6 +74,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Pago/Edit/5
+        [Authorize]
         public ActionResult Editar(int id)
         {
             ViewBag.contrato = repositorioContrato.ObtenerContrato();
@@ -73,17 +83,18 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Pago/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Editar(int id, IFormCollection collection)
+        public ActionResult Editar(int id, Pago collection)
         {
             Pago p;
             try
             {
                 p = repositorio.ObtenerPorId(id);
-                p.IdContrato = Int32.Parse(collection["IdContrato"]);
-                p.FechaPago = DateTime.Parse(collection["FechaPago"]);
-                p.Importe = Double.Parse(collection["Importe"]);
+                p.IdContrato = collection.IdContrato;
+                p.FechaPago = collection.FechaPago;
+                p.Importe = collection.Importe;
                 repositorio.Editar(p);
                 return RedirectToAction(nameof(Index));
             }
@@ -94,6 +105,7 @@ namespace InmoNovara.Controllers
         }
 
         // GET: Pago/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Eliminar(int id)
         {
             ViewBag.pago =  repositorio.ObtenerPago();
@@ -102,6 +114,7 @@ namespace InmoNovara.Controllers
         }
 
         // POST: Pago/Delete/5
+        [Authorize(Policy = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Eliminar(int id, IFormCollection collection)
