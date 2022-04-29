@@ -88,7 +88,7 @@ namespace InmoNovara.Controllers
                     {
                         Directory.CreateDirectory(path);
                     }
-                    string fileName = "avatar" + u.IdUsuario + Path.GetExtension(u.AvatarFile.FileName);
+                    string fileName = "avatar_" + u.IdUsuario + Path.GetExtension(u.AvatarFile.FileName);
                     string pathCompleto = Path.Combine(path,fileName);
                     u.Avatar = Path.Combine("/Upload",fileName);
                     using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
@@ -119,21 +119,21 @@ namespace InmoNovara.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Editar(int id, IFormCollection collection)
+        public ActionResult Editar(int id, Usuario collection)
         {
             Usuario u;
             try
             {
                 u = repositorio.ObtenerPorId(id);
-                u.Nombre = collection["Nombre"];
-                u.Apellido = collection["Apellido"];
-                u.Email = collection["Email"];
-                if(!collection["Clave"].Equals(u.Clave))
+                u.Nombre = collection.Nombre;
+                u.Apellido = collection.Apellido;
+                u.Email = collection.Email;
+                if(!collection.Clave.Equals(u.Clave))
                 {
-                    if(!String.IsNullOrEmpty(collection["Clave"]))
+                    if(!String.IsNullOrEmpty(collection.Clave))
                     {
                         string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                        password: collection["Clave"],
+                        password: collection.Clave,
                         salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
                         prf: KeyDerivationPrf.HMACSHA1,
                         iterationCount: 1000,
@@ -142,9 +142,14 @@ namespace InmoNovara.Controllers
                         u.Clave = hashed;
                     }
                 }
-                if(!collection["Avatar"].Equals(u.Avatar))
+                if(!collection.AvatarFile.Equals(u.Avatar))
                 {
-                    if(!String.IsNullOrEmpty(collection["Avatar"]))
+                    if(System.IO.File.Exists(Path.Combine(environment.WebRootPath,"Upload","avatar_"+id+Path.GetExtension(u.Avatar))))
+                    {
+                        System.IO.File.Create(Path.Combine(environment.WebRootPath,"Upload","avatar_"+id+Path.GetExtension(u.Avatar)));
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
                     {
                         string wwwPath = environment.WebRootPath;
                         string path = Path.Combine(wwwPath,"Upload");
@@ -152,16 +157,18 @@ namespace InmoNovara.Controllers
                         {
                             Directory.CreateDirectory(path);
                         }
-                        string fileName = "avatar" + u.IdUsuario + Path.GetExtension(u.AvatarFile.FileName);
+                        string fileName = "avatar_" + u.IdUsuario + Path.GetExtension(collection.AvatarFile.FileName);
                         string pathCompleto = Path.Combine(path,fileName);
                         u.Avatar = Path.Combine("/Upload",fileName);
                         using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
                         {
-                            u.AvatarFile.CopyTo(stream);
+                            collection.AvatarFile.CopyTo(stream);
+                            
                         }
                     }
                 }
-                u.Rol = Int32.Parse(collection["Rol"]);
+                u.AvatarFile = collection.AvatarFile;
+                u.Rol = collection.Rol;
                 repositorio.Editar(u);
 
                 return RedirectToAction(nameof(Index));
@@ -188,7 +195,13 @@ namespace InmoNovara.Controllers
         {
             try
             {
+                Usuario u = repositorio.ObtenerPorId(id);
                 repositorio.Baja(id);
+                if(System.IO.File.Exists(Path.Combine(environment.WebRootPath,"Upload","avatar_"+id+Path.GetExtension(u.Avatar))))
+                {
+                    System.IO.File.Delete(Path.Combine(environment.WebRootPath,"Upload","avatar_"+id+Path.GetExtension(u.Avatar)));
+                    return RedirectToAction(nameof(Index));
+                }
 
                 return RedirectToAction(nameof(Index));
             }
