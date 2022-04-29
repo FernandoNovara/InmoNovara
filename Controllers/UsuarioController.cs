@@ -11,18 +11,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace InmoNovara.Controllers
 {
     public class UsuarioController : Controller
     {
+        private readonly IWebHostEnvironment environment;
         private readonly IConfiguration configuration;
         public RepositorioUsuario repositorio;
 
         // GET: Usuario
 
-        public UsuarioController(IConfiguration configuration)
+        public UsuarioController(IConfiguration configuration,IWebHostEnvironment environment)
         {
+            this.environment = environment;
             this.configuration = configuration;
             repositorio = new RepositorioUsuario();
         }
@@ -76,6 +80,23 @@ namespace InmoNovara.Controllers
                         numBytesRequested: 256 / 8));
                 u.Clave = hashed;
                 repositorio.Alta(u);
+                if(u.AvatarFile != null && u.IdUsuario > 0)
+                {
+                    string wwwPath = environment.WebRootPath;
+                    string path = Path.Combine(wwwPath,"Upload");
+                    if(!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    string fileName = "avatar" + u.IdUsuario + Path.GetExtension(u.AvatarFile.FileName);
+                    string pathCompleto = Path.Combine(path,fileName);
+                    u.Avatar = Path.Combine("/Upload",fileName);
+                    using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
+                    {
+                         u.AvatarFile.CopyTo(stream);
+                    }
+                    repositorio.Editar(u);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -107,6 +128,39 @@ namespace InmoNovara.Controllers
                 u.Nombre = collection["Nombre"];
                 u.Apellido = collection["Apellido"];
                 u.Email = collection["Email"];
+                if(!collection["Clave"].Equals(u.Clave))
+                {
+                    if(!String.IsNullOrEmpty(collection["Clave"]))
+                    {
+                        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: collection["Clave"],
+                        salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                        prf: KeyDerivationPrf.HMACSHA1,
+                        iterationCount: 1000,
+                        numBytesRequested: 256 / 8));
+                        
+                        u.Clave = hashed;
+                    }
+                }
+                if(!collection["Avatar"].Equals(u.Avatar))
+                {
+                    if(!String.IsNullOrEmpty(collection["Avatar"]))
+                    {
+                        string wwwPath = environment.WebRootPath;
+                        string path = Path.Combine(wwwPath,"Upload");
+                        if(!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        string fileName = "avatar" + u.IdUsuario + Path.GetExtension(u.AvatarFile.FileName);
+                        string pathCompleto = Path.Combine(path,fileName);
+                        u.Avatar = Path.Combine("/Upload",fileName);
+                        using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
+                        {
+                            u.AvatarFile.CopyTo(stream);
+                        }
+                    }
+                }
                 u.Rol = Int32.Parse(collection["Rol"]);
                 repositorio.Editar(u);
 

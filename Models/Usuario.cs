@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace InmoNovara.Models
 {
@@ -23,6 +24,8 @@ namespace InmoNovara.Models
         public string Email { get; set; }
 		[Required, DataType(DataType.Password)]
 		public string Clave { get; set; }
+		public string Avatar{get;set;}
+		public IFormFile AvatarFile {get;set;}
         public int Rol { get; set; }
 		[Display(Name = "Jerarquia")]
         public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";

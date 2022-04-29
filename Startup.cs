@@ -59,7 +59,7 @@ namespace InmoNovara
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("Login", "entrar/{**accion}", new { controller = "Usuario", action = "Login" });
-                endpoints.MapControllerRoute(name: "default","{controller=Propietario}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(name: "default","{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
