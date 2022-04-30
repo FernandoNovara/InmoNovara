@@ -13,7 +13,7 @@ namespace InmoNovara.Controllers
     public class ContratoController : Controller
     {
         RepositorioContrato repositorioContrato;
-        RepositorioPropietario repositorioPropietario;
+        RepositorioPago repositorioPago;
         RepositorioInmueble repositorioInmueble;
         RepositorioInquilino repositorioInquilino;
         RepositorioGarante repositorioGarante;
@@ -26,7 +26,7 @@ namespace InmoNovara.Controllers
             repositorioInmueble = new RepositorioInmueble();
             repositorioInquilino = new RepositorioInquilino();
             repositorioGarante = new RepositorioGarante();
-            repositorioPropietario = new RepositorioPropietario();
+            repositorioPago = new RepositorioPago();
         }
 
         [Authorize]
@@ -36,7 +36,6 @@ namespace InmoNovara.Controllers
             ViewBag.Inmueble = repositorioInmueble.ObtenerInmueble();
             ViewBag.Inquilino = repositorioInquilino.ObtenerInquilino();
             ViewBag.Garante = repositorioGarante.ObtenerGarante();
-            ViewBag.Propietario = repositorioPropietario.ObtenerPropietario();
             return View(lista);
         }
 

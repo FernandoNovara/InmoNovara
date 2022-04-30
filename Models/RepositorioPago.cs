@@ -124,6 +124,40 @@ namespace InmoNovara.Models
             }
             return res;
         }
+
+        public IList<Pago> ObtenerPorContrato(int id)
+        {
+            var res = new List<Pago>();
+            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                string sql = @$"SELECT IdPago,Pago.IdContrato,FechaPago,inmueble.Precio AS Importe
+                                FROM Pago 
+                                JOIN Contrato on Pago.IdContrato = Contrato.IdContrato
+                                JOIN inmueble on inmueble.IdInmueble = contrato.IdInmueble;";
+                using(MySqlCommand comm = new MySqlCommand(sql,conn))
+                {
+                    comm.Parameters.AddWithValue("@id",id);
+                    conn.Open();
+                    var reader = comm.ExecuteReader();
+                    if(reader.Read())
+                    {
+                        var p = new Pago
+                        {
+                            IdPago = reader.GetInt32(0),
+                            IdContrato = reader.GetInt32(1),
+                            FechaPago = reader.GetDateTime(2),
+                            Importe = reader.GetDouble(3),
+                        };
+                        res.Add(p);
+                    }
+                    conn.Close();
+                }
+                
+            }
+            return res;
+        }
+
+
     }
 
 }

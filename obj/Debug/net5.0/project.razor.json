@@ -15739,6 +15739,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Pago\\Pagos.cshtml",
+      "TargetPath": "Views\\Pago\\Pagos.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Xampp\\htdocs\\.Net\\InmoNovara\\Views\\Usuario\\Detalles.cshtml",
       "TargetPath": "Views\\Usuario\\Detalles.cshtml",
       "FileKind": "mvc"

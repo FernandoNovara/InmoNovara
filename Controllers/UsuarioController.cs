@@ -130,44 +130,27 @@ namespace InmoNovara.Controllers
                 u.Email = collection.Email;
                 if(!collection.Clave.Equals(u.Clave))
                 {
-                    if(!String.IsNullOrEmpty(collection.Clave))
-                    {
-                        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                        password: collection.Clave,
-                        salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
-                        prf: KeyDerivationPrf.HMACSHA1,
-                        iterationCount: 1000,
-                        numBytesRequested: 256 / 8));
-                        
-                        u.Clave = hashed;
-                    }
+                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: collection.Clave,
+                    salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                    prf: KeyDerivationPrf.HMACSHA1,
+                    iterationCount: 1000,
+                    numBytesRequested: 256 / 8));
+                    
+                    u.Clave = hashed;
                 }
-                if(!collection.AvatarFile.Equals(u.Avatar))
+                if(collection.AvatarFile != null)
                 {
-                    if(System.IO.File.Exists(Path.Combine(environment.WebRootPath,"Upload","avatar_"+id+Path.GetExtension(u.Avatar))))
-                    {
-                        System.IO.File.Create(Path.Combine(environment.WebRootPath,"Upload","avatar_"+id+Path.GetExtension(u.Avatar)));
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
                         string wwwPath = environment.WebRootPath;
                         string path = Path.Combine(wwwPath,"Upload");
-                        if(!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
                         string fileName = "avatar_" + u.IdUsuario + Path.GetExtension(collection.AvatarFile.FileName);
                         string pathCompleto = Path.Combine(path,fileName);
                         u.Avatar = Path.Combine("/Upload",fileName);
                         using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
                         {
                             collection.AvatarFile.CopyTo(stream);
-                            
                         }
-                    }
                 }
-                u.AvatarFile = collection.AvatarFile;
                 u.Rol = collection.Rol;
                 repositorio.Editar(u);
 

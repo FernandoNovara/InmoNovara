@@ -130,5 +130,33 @@ namespace InmoNovara.Controllers
                 return View();
             }
         }
+
+        public ActionResult Pagos(int id)
+        {
+            var lista = repositorioContrato.ObtenerPorId(id);
+            ViewBag.Pagos = repositorio.ObtenerPorContrato(id);
+            return View(lista);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RealizarPago(int id,IFormCollection collection)
+        {
+            try
+            {
+                
+
+                return RedirectToAction(nameof(Index));
+            }   
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
     }
+        
 }

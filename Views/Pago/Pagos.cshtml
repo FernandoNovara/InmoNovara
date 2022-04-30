@@ -1,0 +1,54 @@
+@model InmoNovara.Models.Pago
+
+@{
+    ViewData["Title"] = "Contratos";
+    var pagos = (List<Pago>)ViewBag.Pagos;
+}
+
+<h1>Inicio @ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numero de pago
+            </th>
+            <th>
+                Codigo contrato Contrato
+            </th>
+            <th>
+                Fecha de Pago
+            </th>
+            <th>
+                Importe
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in pagos) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdContrato)
+            </td>
+            <td>
+                @item.FechaPago.ToShortDateString()
+            </td>
+            <td>
+                @("$"+item.Importe)
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a href="Index" class="btn btn-primary">Volver</a>
+    <a asp-controller="Pago" asp-action="RealizarPago" class="btn btn-success">Realizar Pago</a>
+</div>
