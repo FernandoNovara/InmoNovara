@@ -1,4 +1,4 @@
-@model InmoNovara.Models.Pago
+@model InmoNovara.Models.Contrato
 
 @{
     ViewData["Title"] = "Contratos";
@@ -49,6 +49,6 @@
 </table>
 
 <div>
-    <a href="Index" class="btn btn-primary">Volver</a>
+    <a asp-controller="Contrato" asp-action="Index" class="btn btn-primary">Volver</a>
     <a asp-controller="Pago" asp-action="RealizarPago" class="btn btn-success">Realizar Pago</a>
 </div>

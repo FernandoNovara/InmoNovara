@@ -146,5 +146,7 @@ namespace InmoNovara.Controllers
                 return View();
             }
         }
+
+
     }
 }
