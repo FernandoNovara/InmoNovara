@@ -6,6 +6,7 @@ namespace InmoNovara.Models
     public class Garante
     {
         [Display(Name = "Codigo")]
+        [Key]
         public Int32 IdGarante {get;set; }
         [Display(Name = "Nombre Completo")]
         public string Nombre {get;set;}

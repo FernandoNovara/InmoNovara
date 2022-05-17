@@ -31,19 +31,11 @@ namespace InmoNovara.Controllers
             repositorio = new RepositorioUsuario();
         }
 
-        [Authorize]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Index()
         {
-            if (User.IsInRole("Administrador"))
-            {
                 var lista = repositorio.ObtenerUsuario();
                 return View(lista);
-            }
-            else
-            {
-                return RedirectToAction("Index","Propietario");
-            }
-
         }
 
         // GET: Usuario/Detalles/5
@@ -121,38 +113,88 @@ namespace InmoNovara.Controllers
         [Authorize]
         public ActionResult Editar(int id, Usuario collection)
         {
+            var vista = nameof(Editar);//de que vista provengo
             Usuario u;
             try
             {
-                u = repositorio.ObtenerPorId(id);
-                u.Nombre = collection.Nombre;
-                u.Apellido = collection.Apellido;
-                u.Email = collection.Email;
-                if(!collection.Clave.Equals(u.Clave))
+
+                if (!User.IsInRole("Administrador"))
                 {
-                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                    password: collection.Clave,
-                    salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
-                    prf: KeyDerivationPrf.HMACSHA1,
-                    iterationCount: 1000,
-                    numBytesRequested: 256 / 8));
-                    
-                    u.Clave = hashed;
-                }
-                if(collection.AvatarFile != null)
-                {
-                        string wwwPath = environment.WebRootPath;
-                        string path = Path.Combine(wwwPath,"Upload");
-                        string fileName = "avatar_" + u.IdUsuario + Path.GetExtension(collection.AvatarFile.FileName);
-                        string pathCompleto = Path.Combine(path,fileName);
-                        u.Avatar = Path.Combine("/Upload",fileName);
-                        using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
+                    vista = nameof(Perfil);
+                    var usuarioActual = repositorio.ObtenerPorEmail(User.Identity.Name);
+
+                    if (usuarioActual.IdUsuario != id)
+                    {
+                        usuarioActual.Nombre = collection.Nombre;
+                        usuarioActual.Apellido = collection.Apellido;
+                        usuarioActual.Email = collection.Email;
+
+                        if(!string.IsNullOrEmpty(collection.Clave))
                         {
-                            collection.AvatarFile.CopyTo(stream);
+                            if(!collection.Clave.Equals(usuarioActual.Clave))
+                            {
+                                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                                password: collection.Clave,
+                                salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                                prf: KeyDerivationPrf.HMACSHA1,
+                                iterationCount: 1000,
+                                numBytesRequested: 256 / 8));
+                                usuarioActual.Clave = hashed;
+                            }
                         }
+
+                        if(collection.AvatarFile != null)
+                        {
+                                string wwwPath = environment.WebRootPath;
+                                string path = Path.Combine(wwwPath,"Upload");
+                                string fileName = "avatar_" + usuarioActual.IdUsuario + Path.GetExtension(collection.AvatarFile.FileName);
+                                string pathCompleto = Path.Combine(path,fileName);
+                                usuarioActual.Avatar = Path.Combine("/Upload",fileName);
+                                using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
+                                {
+                                    collection.AvatarFile.CopyTo(stream);
+                                }
+                        }
+                        repositorio.Editar(usuarioActual);
+                        return RedirectToAction(nameof(Index), "Home");   
+                    }
                 }
-                u.Rol = collection.Rol;
-                repositorio.Editar(u);
+                else
+                {
+                    u = repositorio.ObtenerPorId(id);
+                    u.Nombre = collection.Nombre;
+                    u.Apellido = collection.Apellido;
+                    u.Email = collection.Email;
+                    if(!string.IsNullOrEmpty(collection.Clave))
+                    {
+                        if(!collection.Clave.Equals(u.Clave))
+                        {
+                            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                            password: collection.Clave,
+                            salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                            prf: KeyDerivationPrf.HMACSHA1,
+                            iterationCount: 1000,
+                            numBytesRequested: 256 / 8));
+                            
+                            u.Clave = hashed;
+                        }
+                    }                
+                    if(collection.AvatarFile != null)
+                    {
+                            string wwwPath = environment.WebRootPath;
+                            string path = Path.Combine(wwwPath,"Upload");
+                            string fileName = "avatar_" + u.IdUsuario + Path.GetExtension(collection.AvatarFile.FileName);
+                            string pathCompleto = Path.Combine(path,fileName);
+                            u.Avatar = Path.Combine("/Upload",fileName);
+                            using(FileStream stream = new FileStream(pathCompleto,FileMode.Create))
+                            {
+                                collection.AvatarFile.CopyTo(stream);
+                            }
+                    }
+                    u.Rol = collection.Rol;
+                    repositorio.Editar(u);
+                    return RedirectToAction(vista);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -160,6 +202,15 @@ namespace InmoNovara.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: Usuario/Perfil/
+        [Authorize]
+        public ActionResult Perfil()
+        {
+            var u = repositorio.ObtenerPorEmail(User.Identity.Name);
+            ViewBag.Roles = Usuario.ObtenerRoles();
+            return View("Editar",u);
         }
 
         // GET: Usuario/Eliminar/5
@@ -208,7 +259,7 @@ namespace InmoNovara.Controllers
         {
             try
             {
-                var returnUrl = String.IsNullOrEmpty(TempData["returnUrl"] as string)? "/Propietario" : TempData["returnUrl"].ToString();                
+                //var returnUrl = String.IsNullOrEmpty(TempData["returnUrl"] as string)? "/Propietario" : TempData["returnUrl"].ToString();                
                 if(ModelState.IsValid)
                 {
                     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -222,7 +273,7 @@ namespace InmoNovara.Controllers
                     if (e == null || e.Clave != hashed)
                     {
                         ModelState.AddModelError("", "El email o la clave no son correctos");
-                        TempData["returnUrl"] = returnUrl;
+                        //TempData["returnUrl"] = returnUrl;
                         return View();
                     }
 
@@ -239,10 +290,11 @@ namespace InmoNovara.Controllers
                     await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity));
-                    TempData.Remove("returnUrl");
-                    return Redirect(returnUrl);
+                    //TempData.Remove("returnUrl");
+                    //return Redirect(returnUrl);
+                    return RedirectToAction("Index", "Propietario");
                 }
-                TempData["returnUrl"] = returnUrl;
+                //TempData["returnUrl"] = returnUrl;
                 return View();
             }
             catch(Exception ex)

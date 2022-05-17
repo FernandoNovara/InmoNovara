@@ -169,3 +169,10 @@ D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Shared\_LoginModal.
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Propietario\Propiedades.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Inmueble\Contratos.cshtml.g.cs
 D:\Xampp\htdocs\.Net\InmoNovara\obj\Debug\net5.0\Razor\Views\Pago\Pagos.cshtml.g.cs
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\MySqlConnector.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll

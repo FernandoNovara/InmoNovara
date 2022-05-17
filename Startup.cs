@@ -1,6 +1,8 @@
+using InmoNovara.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +11,8 @@ namespace InmoNovara
 {
     public class Startup
     {
+        private readonly IConfiguration configuration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,17 +26,26 @@ namespace InmoNovara
               services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
               .AddCookie(options =>
               {
-                  options.LoginPath = "/Usuario/login";
+                  options.LoginPath = "/Usuario/Login";
                   options.LogoutPath = "/Usuario/Logout";
                   options.AccessDeniedPath = "/Home/Restringido";
               });
 
               services.AddAuthorization(options => 
               {
-                  options.AddPolicy("Administrador",
+                options.AddPolicy("Administrador",
                                     policy => policy.RequireRole("Administrador"));
               });      
-              services.AddMvc();      
+              services.AddMvc();    
+              
+              
+            /* PARA MySql - usando Pomelo */
+			services.AddDbContext<DataContext>(
+				options => options.UseMySql(
+					Configuration["ConnectionStrings:DefaultConnection"],
+					ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])
+				)
+			);  
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

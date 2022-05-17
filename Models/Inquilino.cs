@@ -5,6 +5,7 @@ namespace InmoNovara.Models
 {
     public class Inquilino
     {
+        [Key]
         [Display(Name = "Codigo")]
         public Int32 Id {get;set; }
         [Display(Name = "Nombre Completo")]

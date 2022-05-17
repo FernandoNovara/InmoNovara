@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 
 namespace InmoNovara.Models
@@ -15,6 +16,7 @@ namespace InmoNovara.Models
     public class Usuario
     {
         [Display(Name = "Codigo")]
+		[Key]
         public int IdUsuario {get;set;}
         [Required]
         public string Nombre {get;set;}
@@ -22,9 +24,11 @@ namespace InmoNovara.Models
         public string Apellido {get;set;}
         [Required, EmailAddress]
         public string Email { get; set; }
-		[Required, DataType(DataType.Password)]
+		[DataType(DataType.Password)]
 		public string Clave { get; set; }
 		public string Avatar{get;set;}
+		[NotMapped]
+		[Display(Name = "Foto de Perfil")]
 		public IFormFile AvatarFile {get;set;}
         public int Rol { get; set; }
 		[Display(Name = "Jerarquia")]

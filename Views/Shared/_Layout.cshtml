@@ -63,11 +63,10 @@
                                     <a class="nav-link text-light" asp-area="" asp-controller="Usuario" asp-action="">Usuario</a>
                                 </li>
                             }
-
                             @if (User.IsInRole("Empleado"))
-                            {
-                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Usuario" asp-action="Editar">Usuario</a>
+                            {    
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-route-id="" asp- asp-controller="Usuario" asp-action="Perfil">Perfil</a>
                                 </li>
                             }
 
