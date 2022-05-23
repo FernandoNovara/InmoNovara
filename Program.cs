@@ -16,6 +16,8 @@ namespace InmoNovara
             CreateHostBuilder(args).Build().Run();
         }
 
+
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -23,4 +25,10 @@ namespace InmoNovara
                     webBuilder.UseStartup<Startup>();
                 });
     }
+
+    
+        // builder.WebHost.ConfigureKestrel(serverOptions =>
+        // {
+        // serverOptions.ListenAnyIP(5000);
+        // });
 }

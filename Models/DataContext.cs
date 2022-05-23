@@ -12,6 +12,7 @@ namespace InmoNovara.Models
         {
 
         }
+        
         public DbSet<Propietario> Propietarios { get; set; }
         public DbSet<Inquilino> Inquilinos { get; set; }
         public DbSet<Inmueble> Inmuebles { get; set; }

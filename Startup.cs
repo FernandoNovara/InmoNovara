@@ -29,16 +29,47 @@ namespace InmoNovara
                   options.LoginPath = "/Usuario/Login";
                   options.LogoutPath = "/Usuario/Logout";
                   options.AccessDeniedPath = "/Home/Restringido";
-              });
+              })
+              .AddJwtBearer(options =>//la api web valida con token
+				{
+					options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+					{
+						ValidateIssuer = true,
+						ValidateAudience = true,
+						ValidateLifetime = true,
+						ValidateIssuerSigningKey = true,
+						ValidIssuer = configuration["TokenAuthentication:Issuer"],
+						ValidAudience = configuration["TokenAuthentication:Audience"],
+						IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(
+						configuration["TokenAuthentication:SecretKey"])),
+					};
+					// opción extra para usar el token el hub
+					options.Events = new JwtBearerEvents
+					{
+						OnMessageReceived = context =>
+						{
+							// Read the token out of the query string
+							var accessToken = context.Request.Query["access_token"];
+							// If the request is for our hub...
+							var path = context.HttpContext.Request.Path;
+							if (!string.IsNullOrEmpty(accessToken) &&
+								path.StartsWithSegments("/chatsegurohub"))
+							{//reemplazar la url por la usada en la ruta ⬆
+								context.Token = accessToken;
+							}
+							return Task.CompletedTask;
+						}
+					};
+				});
 
               services.AddAuthorization(options => 
               {
                 options.AddPolicy("Administrador",
                                     policy => policy.RequireRole("Administrador"));
               });      
-              services.AddMvc();    
+              services.AddMvc();
               
-              
+            
             /* PARA MySql - usando Pomelo */
 			services.AddDbContext<DataContext>(
 				options => options.UseMySql(
