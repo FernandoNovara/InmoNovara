@@ -176,3 +176,10 @@ D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\MySqlConnector.dll
 D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Pomelo.EntityFrameworkCore.MySql.dll
 D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
 D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+D:\Xampp\htdocs\.Net\InmoNovara\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll

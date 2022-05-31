@@ -27,8 +27,11 @@ namespace InmoNovara
     }
 
     
-        // builder.WebHost.ConfigureKestrel(serverOptions =>
-        // {
-        // serverOptions.ListenAnyIP(5000);
-        // });
+        builder.WebHost.ConfigureKestrel(serverOptions =>
+        {
+        serverOptions.ListenAnyIP(5000);
+        });
+    
+    
+
 }
