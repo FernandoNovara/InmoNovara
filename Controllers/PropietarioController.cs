@@ -90,7 +90,6 @@ namespace InmoNovara.Controllers
                 p.Nombre = collection["Nombre"];
                 p.Apellido = collection["Apellido"];
                 p.Dni = collection["Dni"];
-                p.Direccion = collection["Direccion"];
                 p.Telefono = collection["Telefono"];
                 repositorio.Editar(p);
                 return RedirectToAction(nameof(Index));
