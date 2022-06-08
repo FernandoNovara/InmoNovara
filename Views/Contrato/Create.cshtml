@@ -37,7 +37,7 @@
                 <select class="form-control" name="Idgarante">
                     @foreach (var item in (List<Garante>)ViewBag.garante)
                     {
-                        <option value="@item.IdGarante">@(item.Dni+" "+item.Nombre)</option>
+                        <option value="@item.IdGarante">@(item.Dni+" "+item.NombreGarante)</option>
                     }
                 </select>
                 <span asp-validation-for="IdGarante" class="text-danger"></span>

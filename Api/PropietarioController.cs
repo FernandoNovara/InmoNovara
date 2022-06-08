@@ -30,34 +30,6 @@ namespace Inmobiliaria_.Net_Core.Api
 			this.config = config;
 		}
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
-		{
-			try
-			{
-				return Ok(await Contexto.Propietarios.ToListAsync());
-			}
-			catch (Exception ex)
-			{
-				return BadRequest(ex);
-			}
-		}
-
-
-		[HttpGet("{id}")]
-		public async Task<IActionResult> Get(int id)
-		{
-			try
-			{
-				var entidad = await Contexto.Propietarios.SingleOrDefaultAsync(x => x.Id == id);
-				return entidad != null ? Ok(entidad) : NotFound();
-			}
-			catch(Exception ex)
-			{
-				return BadRequest(ex);
-			}
-		}
-
 		[HttpGet]
 		public async Task<ActionResult<Propietario>> Get()
 		{
@@ -138,20 +110,38 @@ namespace Inmobiliaria_.Net_Core.Api
 			}
 		}
 
-		// GET: api/Propietarios/test
-		[HttpGet("test")]
-		[AllowAnonymous]
-		public IActionResult Test()
+		[HttpPut]
+		public async Task<IActionResult> Put([FromBody] Propietario entidad)
 		{
 			try
 			{
-				return Ok("anduvo");
+				if (ModelState.IsValid)
+				{
+					Propietario original = await Contexto.Propietarios.AsNoTracking().SingleAsync(x=>x.Email == User.Identity.Name);
+					entidad.Id = original.Id;
+					if (String.IsNullOrEmpty(entidad.Clave))
+					{
+						entidad.Clave = original.Clave;
+					}
+					else
+					{
+						entidad.Clave = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+							password: entidad.Clave,
+							salt: System.Text.Encoding.ASCII.GetBytes(config["Salt"]),
+							prf: KeyDerivationPrf.HMACSHA1,
+							iterationCount: 1000,
+							numBytesRequested: 256 / 8));
+					}
+					Contexto.Propietarios.Update(entidad);
+					await Contexto.SaveChangesAsync();
+					return Ok(entidad);
+				}
+				return BadRequest();
 			}
 			catch (Exception ex)
 			{
 				return BadRequest(ex);
 			}
-		}
-		
+        }
     }
 }

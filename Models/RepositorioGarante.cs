@@ -18,7 +18,7 @@ namespace InmoNovara.Models
             var res = new List<Garante>();
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                string sql = @"Select IdGarante,Nombre,Dni,Direccion,Correo,Telefono From Garante;";
+                string sql = @"Select IdGarante,NombreGarante,Dni,Direccion,Correo,TelefonoGarante From Garante;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
                     conn.Open();
@@ -28,11 +28,11 @@ namespace InmoNovara.Models
                         var I = new Garante
                         {
                             IdGarante = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
+                            NombreGarante = reader.GetString(1),
                             Dni = reader.GetString(2),
                             Direccion = reader.GetString(3),
                             Correo = reader.GetString(4),
-                            Telefono = reader.GetString(5)
+                            TelefonoGarante = reader.GetString(5)
                         };
                         res.Add(I);
                     }
@@ -47,17 +47,17 @@ namespace InmoNovara.Models
             var res = 0;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                String sql = @$"insert into Garante (Nombre,Dni,Direccion,Correo,Telefono) 
-                            values (@{nameof(I.Nombre)},@{nameof(I.Dni)},@{nameof(I.Direccion)},@{nameof(I.Correo)},@{nameof(I.Telefono)});
+                String sql = @$"insert into Garante (NombreGarante,Dni,Direccion,Correo,TelefonoGarante) 
+                            values (@{nameof(I.NombreGarante)},@{nameof(I.Dni)},@{nameof(I.Direccion)},@{nameof(I.Correo)},@{nameof(I.TelefonoGarante)});
                             Select last_Insert_Id();";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
 
-                    comm.Parameters.AddWithValue($"@{nameof(I.Nombre)}",I.Nombre);
+                    comm.Parameters.AddWithValue($"@{nameof(I.NombreGarante)}",I.NombreGarante);
                     comm.Parameters.AddWithValue($"@{nameof(I.Dni)}",I.Dni);
                     comm.Parameters.AddWithValue($"@{nameof(I.Direccion)}",I.Direccion);
                     comm.Parameters.AddWithValue($"@{nameof(I.Correo)}",I.Correo);
-                    comm.Parameters.AddWithValue($"@{nameof(I.Telefono)}",I.Telefono);   
+                    comm.Parameters.AddWithValue($"@{nameof(I.TelefonoGarante)}",I.TelefonoGarante);   
                     conn.Open();
                     res=Convert.ToInt32(comm.ExecuteScalar());
                     conn.Close();
@@ -89,14 +89,14 @@ namespace InmoNovara.Models
             int res = -1;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                String sql = $"Update Garante Set Nombre=@nombre,Dni=@dni,Direccion=@direccion,Correo=@correo,Telefono=@telefono where IdGarante = @idGarante;";
+                String sql = $"Update Garante Set NombreGarante=@NombreGarante,Dni=@dni,Direccion=@direccion,Correo=@correo,TelefonoGarante=@TelefonoGarante where IdGarante = @idGarante;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
-                    comm.Parameters.AddWithValue("@nombre",I.Nombre);
+                    comm.Parameters.AddWithValue("@NombreGarante",I.NombreGarante);
                     comm.Parameters.AddWithValue("@dni",I.Dni);
                     comm.Parameters.AddWithValue("@direccion",I.Direccion);
                     comm.Parameters.AddWithValue("@correo",I.Correo);
-                    comm.Parameters.AddWithValue("@telefono",I.Telefono);   
+                    comm.Parameters.AddWithValue("@TelefonoGarante",I.TelefonoGarante);   
                     comm.Parameters.AddWithValue("@idGarante",I.IdGarante);
                     conn.Open();
                     res = comm.ExecuteNonQuery();
@@ -110,7 +110,7 @@ namespace InmoNovara.Models
             Garante res = null;
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                string sql = @"Select IdGarante,Nombre,Dni,Direccion,Correo,Telefono From Garante where IdGarante = @id;";
+                string sql = @"Select IdGarante,NombreGarante,Dni,Direccion,Correo,TelefonoGarante From Garante where IdGarante = @id;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))
                 {
                     comm.Parameters.AddWithValue("@id",id);
@@ -121,11 +121,11 @@ namespace InmoNovara.Models
                         res = new Garante
                         {
                             IdGarante = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
+                            NombreGarante = reader.GetString(1),
                             Dni = reader.GetString(2),
                             Direccion = reader.GetString(3),
                             Correo = reader.GetString(4),
-                            Telefono = reader.GetString(5)
+                            TelefonoGarante = reader.GetString(5)
                         };
                     }
                     conn.Close();

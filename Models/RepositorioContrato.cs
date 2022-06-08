@@ -18,7 +18,7 @@ namespace InmoNovara.Models
             var res = new List<Contrato>();
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
-                string sql = @$"SELECT contrato.IdContrato,FechaInicio,FechaFinal,contrato.IdInmueble,inmueble.Tipo,contrato.IdInquilino,inquilino.Nombre,inquilino.Dni,contrato.IdGarante,garante.Nombre,garante.Dni
+                string sql = @$"SELECT contrato.IdContrato,FechaInicio,FechaFinal,contrato.IdInmueble,inmueble.Tipo,contrato.IdInquilino,inquilino.Nombre,inquilino.Dni,contrato.IdGarante,garante.NombreGarante,garante.Dni
                                 FROM contrato
                                 JOIN inmueble On contrato.IdInmueble = inmueble.IdInmueble
                                 JOIN inquilino On contrato.IdInquilino= inquilino.Id
@@ -48,7 +48,7 @@ namespace InmoNovara.Models
                             garante = new Garante
                             {
                                 IdGarante = reader.GetInt32(8),
-                                Nombre = reader.GetString(9),
+                                NombreGarante = reader.GetString(9),
                                 Dni = reader.GetString(10)
                             }
                         };
@@ -159,7 +159,7 @@ namespace InmoNovara.Models
                             garante = new Garante
                             {
                                 IdGarante = reader.GetInt32(8),
-                                Nombre = reader.GetString(9),
+                                NombreGarante = reader.GetString(9),
                                 Dni = reader.GetString(10)
                             }
                         };
@@ -206,7 +206,7 @@ namespace InmoNovara.Models
                             garante = new Garante
                             {
                                 IdGarante = reader.GetInt32(8),
-                                Nombre = reader.GetString(9),
+                                NombreGarante = reader.GetString(9),
                                 Dni = reader.GetString(10)
                             }
                         };

@@ -40,7 +40,7 @@
                 <select class="form-control" name="IdGarante">
                     @foreach (var item in Garante)
                     {
-                        @:<option @(item.IdGarante==Model.IdGarante ? "selected" : "") value="@item.IdGarante">@(item.Nombre +" "+ item.Dni)</option>
+                        @:<option @(item.IdGarante==Model.IdGarante ? "selected" : "") value="@item.IdGarante">@(item.NombreGarante +" "+ item.Dni)</option>
                     }
                 </select>
                 <span asp-validation-for="IdGarante" class="text-danger"></span>

@@ -83,11 +83,11 @@ namespace InmoNovara.Controllers
             try
             {
                 I = repositorioGarante.ObtenerPorId(id);    
-                I.Nombre = collection["Nombre"];
+                I.NombreGarante = collection["Nombre"];
                 I.Dni = collection["Dni"];
                 I.Direccion = collection["Direccion"];
                 I.Correo = collection["Correo"];
-                I.Telefono = collection["Telefono"];
+                I.TelefonoGarante = collection["Telefono"];
                 repositorioGarante.Editar(I);
                 return RedirectToAction(nameof(Index));
             }

@@ -131,7 +131,7 @@ namespace InmoNovara.Models
             using(MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 string sql = @$"SELECT IdPago,Pago.IdContrato,FechaPago,inmueble.Precio AS Importe
-                                FROM Pago 
+                                FROM Pago  
                                 JOIN Contrato on Pago.IdContrato = Contrato.IdContrato
                                 JOIN inmueble on inmueble.IdInmueble = contrato.IdInmueble;";
                 using(MySqlCommand comm = new MySqlCommand(sql,conn))

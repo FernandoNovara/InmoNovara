@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.IdInmueble)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Uso)
             </th>
             <th>
@@ -31,6 +34,9 @@
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.IdPropietario)
             </th>
             <th></th>
@@ -41,6 +47,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.IdInmueble)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Uso)
@@ -56,6 +65,9 @@
             </td>
             <td>
                 @("$"+item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
                 @(item.Propietario.Nombre + " " + item.Propietario.Apellido)

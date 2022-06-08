@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.IdGarante)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.NombreGarante)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Dni)
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.Correo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
+                @Html.DisplayNameFor(model => model.TelefonoGarante)
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.IdGarante)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.NombreGarante)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Dni)
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Correo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
+                @Html.DisplayFor(modelItem => item.TelefonoGarante)
             </td>
             <td>
                 <a class="btn btn-warning" asp-action="Editar" asp-route-id="@item.IdGarante" title="Editar"><i class="fas fa-pencil-alt"></i></a>
